@@ -1,4 +1,4 @@
-import { Row } from "../types";
+import { Row } from "../lib/types";
 import classnames from "classnames";
 
 type Props = {

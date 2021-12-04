@@ -1,4 +1,4 @@
-import { Row } from "../types";
+import { Row } from "../lib/types";
 import Entries from "./Entries";
 import { groupBy } from "lodash";
 import classnames from "classnames";

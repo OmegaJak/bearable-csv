@@ -8,6 +8,11 @@ This project allows you to generate an HTML page from a CSV export of symptoms a
 
 This project uses [Next.js](https://nextjs.org/).
 
+After cloning the code, ensure npm packages are installed:
+```bash
+npm install
+```
+
 To run the development server locally:
 
 ```bash
