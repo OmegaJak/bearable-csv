@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-do
 import Home from "../src/components/Home"
 import Analyses from "../src/components/Analyses"
 import EntriesList from "../src/components/EntriesList";
-import { Row } from "../src/types";
+import { Row } from "../src/lib/types";
 
 export default function App() {
   const [rows, setRows] = useState<Row[]>([]);
