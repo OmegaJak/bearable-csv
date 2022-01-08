@@ -1,3 +1,4 @@
+import { LocalDate } from "@js-joda/core";
 import Enumerable from "linq";
 import { IEnumerable } from "linq";
 import { DailySymptoms } from "./DailySymptoms";
@@ -5,7 +6,7 @@ import { Symptom } from "./Symptom";
 import { Row } from "./types";
 
 export class Symptoms {
-	Symptoms: Map<string, Map<Date, DailySymptoms>> = new Map<string, Map<Date, DailySymptoms>>();
+	Symptoms: Map<string, Map<LocalDate, DailySymptoms>> = new Map<string, Map<LocalDate, DailySymptoms>>();
 
 	public static Parse(rows: IEnumerable<Row>): Symptoms {
 		var symptoms = new Symptoms();
@@ -13,7 +14,7 @@ export class Symptoms {
 			var symptom = Symptom.Parse(row);
 			var timeMap = symptoms.Symptoms.get(symptom.Name);
 			if (timeMap === undefined) {
-				timeMap = new Map<Date, DailySymptoms>();
+				timeMap = new Map<LocalDate, DailySymptoms>();
 				symptoms.Symptoms.set(symptom.Name, timeMap);
 			}
 

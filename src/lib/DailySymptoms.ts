@@ -1,3 +1,4 @@
+import { LocalDate } from "@js-joda/core";
 import Enumerable from "linq";
 import { fill } from "lodash";
 import { start } from "repl";
@@ -7,7 +8,7 @@ import { TimeOfDay } from "./TimeOfDay";
 
 export class DailySymptoms {
 	Symptoms: Symptom[];
-	Date: Date;
+	Date: LocalDate;
 	Name: string;
 
 	public constructor(startingSymptom: Symptom) {

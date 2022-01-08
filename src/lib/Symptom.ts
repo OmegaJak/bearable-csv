@@ -1,13 +1,15 @@
+import { DateTimeFormatter, LocalDate } from "@js-joda/core";
+import { Locale } from "@js-joda/locale";
 import { TimeOfDay } from "./TimeOfDay";
 import { Row } from "./types";
 
 export class Symptom {
 	readonly Name: string;
-	readonly Date: Date;
+	readonly Date: LocalDate;
 	readonly TimeOfDay: TimeOfDay;
 	readonly Severity: number;
 
-	private constructor(name: string, date: Date, timeOfDay: TimeOfDay, severity: number) {
+	private constructor(name: string, date: LocalDate, timeOfDay: TimeOfDay, severity: number) {
 		this.Name = name;
 		this.Date = date;
 		this.TimeOfDay = timeOfDay;
@@ -26,12 +28,12 @@ export class Symptom {
 		return new Symptom(name, date, timeOfDay, severity);
 	}
 
-	public static CreateFiller(name: string, date: Date, timeOfDay: TimeOfDay): Symptom {
+	public static CreateFiller(name: string, date: LocalDate, timeOfDay: TimeOfDay): Symptom {
 		return new Symptom(name, date, timeOfDay, 0);
 	}
 
 	private static GetSymptomName(symptomDetails: string): string {
-		var regex: RegExp = /(.*)(\(.*\))/;
+		var regex: RegExp = /(.*)( \(.*\))/;
 		var symptomName = regex.exec(symptomDetails)?.[1];
 		if (symptomName === undefined) throw new Error("Failed to parse name of symptom in " + symptomDetails);
 		return symptomName;
@@ -52,7 +54,7 @@ export class Symptom {
 		throw new Error("Failed to parse TimeOfDay " + timeOfDay);
 	}
 
-	private static ParseDate(date: string): Date {
+	private static ParseDate(date: string): LocalDate {
 		var regex: RegExp = /(\d*)(\w*) (\w\w\w) (\d\d\d\d)/;
 		var matchArray = regex.exec(date);
 		if (matchArray === null) throw new Error("Failed to parse date of " + date);
@@ -60,6 +62,8 @@ export class Symptom {
 		var day = parseInt(matchArray[1]);
 		var month = matchArray[3];
 		var year = parseInt(matchArray[4]);
-		return new Date(`${month} ${day} ${year}`);
+
+		let formatter = DateTimeFormatter.ofPattern('yyyy MMM d').withLocale(Locale.US);
+		return LocalDate.parse(`${year} ${month} ${day}`, formatter);
 	}
 }
