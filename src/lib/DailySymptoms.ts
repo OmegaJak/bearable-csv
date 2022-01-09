@@ -14,6 +14,7 @@ export class DailySymptoms {
 	public constructor(startingSymptom: Symptom) {
 		this.Date = startingSymptom.Date;
 		this.Name = startingSymptom.Name;
+		this.Symptoms = [];
 	}
 
 	public AddSymptom(symptom: Symptom) {

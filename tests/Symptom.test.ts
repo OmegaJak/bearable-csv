@@ -2,7 +2,7 @@ import { Symptom } from "../src/lib/Symptom";
 import { TimeOfDay } from "../src/lib/TimeOfDay";
 import { Row } from "../src/lib/types"
 
-it('Can Parse', () => {
+it('Can Parse Row into Symptom', () => {
 	var row = { 
 		date: "30th Nov 2021",
 		weekday: "Tuesday",
