@@ -1,7 +1,5 @@
 import { LocalDate } from "@js-joda/core";
 import Enumerable from "linq";
-import { fill } from "lodash";
-import { start } from "repl";
 import { Symptom } from "./Symptom";
 import { TimeOfDay } from "./TimeOfDay";
 
@@ -18,7 +16,7 @@ export class DailySymptoms {
 	}
 
 	public AddSymptom(symptom: Symptom) {
-		if (symptom.Date != this.Date) throw new Error("Date didn't match");
+		if (!symptom.Date.equals(this.Date)) throw new Error("Date didn't match");
 		if (symptom.Name != this.Name) throw new Error("Name didn't match");
 
 		this.Symptoms.push(symptom);

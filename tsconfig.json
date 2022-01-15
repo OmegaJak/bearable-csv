@@ -26,6 +26,7 @@
     "**/*.tsx",
     "next.config.js"
   ],
+  "files": ["global.d.ts"],
   "exclude": [
     "node_modules"
   ]

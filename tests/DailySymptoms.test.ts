@@ -1,6 +1,8 @@
 import { LocalDate } from "@js-joda/core";
+import Enumerable from "linq";
 import { DailySymptoms } from "../src/lib/DailySymptoms";
 import { Symptom } from "../src/lib/Symptom";
+import { TimeOfDay } from "../src/lib/TimeOfDay";
 
 describe('Constructor', () => {
 	test('Initializes date and name from Symptom', () => {
@@ -32,9 +34,35 @@ describe('AddSymptom', () => {
 
 		expect(() => dailySymptoms.AddSymptom(secondSymptom)).toThrow();
 	});
+
+	test('For symptom with same name and date, adds symptom', () => {
+		var firstSymptom = getTestSymptom();
+		var secondSymptom = getTestSymptom();
+		let dailySymptoms = new DailySymptoms(firstSymptom);
+		dailySymptoms.AddSymptom(firstSymptom);
+
+		dailySymptoms.AddSymptom(secondSymptom);
+
+		expect(dailySymptoms.Symptoms).toIncludeSameMembers([firstSymptom, secondSymptom]);
+	});
 });
 
+describe('FillInGaps', () => {
+	test('With missing AM symptom, inserts AM symptom', () => {
+		let symptoms = [getTestSymptom(TimeOfDay.Pre), getTestSymptom(TimeOfDay.Mid), getTestSymptom(TimeOfDay.PM)];
+		let dailySymptoms = new DailySymptoms(symptoms[0]);
+		for (let symptom of symptoms) {
+			dailySymptoms.AddSymptom(symptom);
+		}
 
-function getTestSymptom() : Symptom {
-	return { Date: LocalDate.of(2021, 5, 13), Name: "TestName" } as Symptom;
+		dailySymptoms.FillInGaps();
+
+		let amSymptom = Enumerable.from(dailySymptoms.Symptoms).firstOrDefault(s => s.TimeOfDay == TimeOfDay.AM);
+		expect(amSymptom).toBeDefined();
+	});
+})
+
+
+function getTestSymptom(timeOfDay: TimeOfDay | undefined = undefined) : Symptom {
+	return { Date: LocalDate.of(2021, 5, 13), Name: "TestName", TimeOfDay: timeOfDay } as Symptom;
 }
